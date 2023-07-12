@@ -1,0 +1,123 @@
+tags:
+  - "auth":
+    description: For logging in and out
+  - "users":
+    description: Endpoints for retrieving/editing user information
+
+routes:
+  /auth/login:
+    get:
+      description: Gets the login page
+      responses:
+        "200": Page loaded successfullt
+        "400": Invalid credentials
+    post:
+      description: Initiates the login
+      consumes: application/json
+      produces: application/json
+      parameters:
+        name: credentials
+        in: body
+        required: true
+        schema:
+          type: object
+          required:
+            - username
+            - password
+          properties:
+            username:
+              type: string
+            password:
+              type: string
+  /auth/logout:
+    get:
+      description: Logs out the user
+      responses:
+        "200": User is logged out
+        "500": Server error
+  /auth/signup:
+    post:
+      description: registers a new user
+      parameters:
+        name: new user info
+        in: body
+        required: true
+        schema:
+          type: object
+          required:
+            - username
+            - password
+            - first name
+            - last name
+            - email address
+            - phone number
+            - street address
+            - city
+            - state
+            - zipcode
+          properties:
+            username:
+              type: string
+            password:
+              type: string
+            first name:
+              type: string
+            last name:
+              type: string
+            email address:
+              type: string
+            phone number:
+              type: string
+            street address:
+              type: string
+            city:
+              type: string
+            state:
+              type: string
+            zipecode:
+              type: string
+
+  /users/:userId:
+    get:
+      description: retrieves user information for a particular user
+      parameter1:
+        name: userId
+        in: path
+        required: true
+      parameter2:
+        name: token
+        in: path (query)
+        required: true
+      responses:
+        "200": Information retrieved/success
+        "401": Unauthorized
+
+    put:
+      description: updates one or more fields of user information
+      parameter1:
+        name: userId
+        in: path
+        required: true
+      parameter2:
+        name: token
+        in: path (query)
+      parameter3:
+        name: userInfo
+        in: body
+        required: true
+      schema:
+        type: object
+        required:
+          - username
+          - password
+          - first name
+          - last name
+          - email address
+          - phone number
+          - street address
+          - city
+          - state
+          - zipcode
+        properties:
+          all:
+            type: string
