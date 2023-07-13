@@ -1,4 +1,23 @@
+const express = require("express");
+const app = express();
 const jwt = require("jsonwebtoken");
+
+const verifyTokenNew = async (req, res, next) => {
+	const { token } = req.query;
+	try {
+		const validated = await jwt.verify(
+			token,
+			"e-commerce-appFULLSTACKCOD#C@D#MI"
+		);
+		if (!validated) {
+			res.status(401).send("Authentication failed.");
+		}
+		console.log("Authentication successful.");
+		next();
+	} catch (err) {
+		console.log(err);
+	}
+};
 
 const verifyToken = async (token) => {
 	try {
