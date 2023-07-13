@@ -34,7 +34,7 @@ CREATE TABLE product (
 	sell_price money NOT NULL,
 	stock_quantity integer NOT NULL,
 	product_url varchar(100) NOT NULL,
-	produt_description text NOT NULL
+	product_description text NOT NULL
 );
 
 CREATE TABLE order_details (
