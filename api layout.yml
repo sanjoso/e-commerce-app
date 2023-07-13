@@ -121,3 +121,23 @@ routes:
         properties:
           all:
             type: string
+  /products/:productId:
+    get:
+      description: returns a specific product
+    parameters:
+      name: product
+      in: path (query)
+    responses:
+      "200": product sucessfully retrieved
+      "404": product doesn't exist
+      "500": generic server error
+  /products/:category:
+    get:
+      description: returns all the products of a specific category
+    parameters:
+      name: category
+      in: path (query)
+    responses:
+      "200": products sucessfully retrieved
+      "404": category doesn't exist
+      "500": generic server error
