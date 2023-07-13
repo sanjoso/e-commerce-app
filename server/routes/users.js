@@ -36,7 +36,7 @@ usersRouter.get("/:userName", async (req, res) => {
 
 usersRouter.put("/:userName", async (req, res) => {
 	const {
-		userName,
+		username,
 		firstName,
 		lastName,
 		emailAddress,
@@ -48,10 +48,10 @@ usersRouter.put("/:userName", async (req, res) => {
 	} = req.body;
 
 	try {
-		const updatedInfo = pool.query(
-			"UPDATE users SET  first_name = $2, last_name = $3, email_address = $4, phone_number = $5, street_address = $6, city = $7, state = $8, zipcode = $9 WHERE username = $1",
+		const updatedInfo = await pool.query(
+			"UPDATE users SET first_name = $2, last_name = $3, email_address = $4, phone_number = $5, street_address = $6, city = $7, state = $8, zipcode = $9 WHERE username = $1 RETURNING *",
 			[
-				userName,
+				username,
 				firstName,
 				lastName,
 				emailAddress,
@@ -62,7 +62,7 @@ usersRouter.put("/:userName", async (req, res) => {
 				zipcode,
 			]
 		);
-		res.status(204).json(updatedInfo);
+		res.status(200).json(updatedInfo);
 	} catch (err) {
 		console.log(err);
 		res.status(400).send("");

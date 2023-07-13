@@ -25,5 +25,23 @@ Content-Type: application/json
 
 ### User requests
 GET http://localhost:8000/users/jsan
-?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImpzYW4iLCJpYXQiOjE2ODkxNTk5NzcsImV4cCI6MTY4OTE2MzU3N30.IEJVysLXWQRjnnuEYIGjx7B8XlUsvbc4pPqcK6_-t2Q
+?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImpzYW4iLCJpYXQiOjE2ODkyNDUxNzAsImV4cCI6MTY4OTI0ODc3MH0.K5T2sED-7HrlB2Mt_J6JQEPz4sXIeXp5jQm1uXquSkU
 Content-Type: application/json
+
+### Update user info
+PUT http://localhost:8000/users/jsan
+?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImpzYW4iLCJpYXQiOjE2ODkyNDUxNzAsImV4cCI6MTY4OTI0ODc3MH0.K5T2sED-7HrlB2Mt_J6JQEPz4sXIeXp5jQm1uXquSkU
+Content-Type: application/json
+
+{
+    "username": "jsan",
+    "password": "jsan",
+    "firstName": "Joe",
+    "lastName": "Santiso",
+    "emailAddress": "sanjoso403@gmail.com",
+    "phoneNumber": "4123773524",
+    "streetAddress": "6931 Willow Wood Drive",
+    "city": "Lockport",
+    "state": "NY",
+    "zipcode": "14094"
+}
