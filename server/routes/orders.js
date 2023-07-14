@@ -1,2 +1,4 @@
 const express = require("express");
-const app = express();
+const ordersRouter = require("express").Router();
+
+module.exports = ordersRouter;
