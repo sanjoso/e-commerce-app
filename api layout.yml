@@ -77,11 +77,11 @@ routes:
             zipecode:
               type: string
 
-  /users/:userId:
+  /users/:username:
     get:
       description: retrieves user information for a particular user
       parameter1:
-        name: userId
+        name: username
         in: path
         required: true
       parameter2:
@@ -95,7 +95,7 @@ routes:
     put:
       description: updates one or more fields of user information
       parameter1:
-        name: userId
+        name: username
         in: path
         required: true
       parameter2:
@@ -121,6 +121,43 @@ routes:
         properties:
           all:
             type: string
+  /users/:username/orders:
+    get:
+      description: Gets the past orders for a particular user
+      parameter1:
+        name: username
+        in: path
+        required: true
+      parameter2:
+        name: token
+        in: query
+        required: true
+      responses:
+        "200": success
+        "403": forbidden (not authorized)
+        "404": not found (no orders from user)
+        "500": server error
+  /users/:username/orders/:orderId:
+    get:
+      description: Returns details of a specific order
+      parameter1:
+        name: username
+        in: path
+        required: true
+      parameter2:
+        name: orderId
+        in: path
+        required: true
+      parameter3:
+        name: token
+        in: query
+        required: true
+      responses:
+        "200": success
+        "403": forbidden (not authorized)
+        "404": not found (userId or orderId is incorrect)
+        "500": server error
+
   /products/:productId:
     get:
       description: returns a specific product
