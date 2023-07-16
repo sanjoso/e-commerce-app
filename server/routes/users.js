@@ -1,5 +1,4 @@
 const express = require("express");
-const app = express();
 const usersRouter = require("express").Router();
 const pool = require("../db");
 const verifyToken = require("../utils/verifyToken");
@@ -62,7 +61,7 @@ usersRouter.put("/:username", async (req, res) => {
 });
 
 //Gets user's orders
-usersRouter.get("/:username/orders", verifyToken, async (req, res) => {
+usersRouter.get("/:username/orders", async (req, res) => {
 	const { username } = req.params;
 	try {
 		const userId = await pool.query(
@@ -82,7 +81,7 @@ usersRouter.get("/:username/orders", verifyToken, async (req, res) => {
 	}
 });
 
-usersRouter.get("/:username/orders/:orderId", verifyToken, async (req, res) => {
+usersRouter.get("/:username/orders/:orderId", async (req, res) => {
 	const { username, orderId } = req.params;
 	try {
 		const order = await pool.query("SELECT * FROM orders WHERE order_id = $1", [

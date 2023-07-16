@@ -44,12 +44,10 @@ CREATE TABLE order_details (
     price money NOT NULL
 );
 
-
--- I think I'll use state for the cart. Then, when it's submitted, orders and order_details can handle it. Don't need cart_id now
 CREATE TABLE cart (
-    cart_id varchar(255) REFERENCES users(cart_id),
-	product_id varchar(255) REFERENCES product(product_id),
-	cart_quantity integer NOT NULL,
+    cart_id varchar(255) REFERENCES users(user_id),
+	product_id integer REFERENCES product(product_id),
+	quantity integer NOT NULL,
     PRIMARY KEY (cart_id, product_id)
 );
 

@@ -178,3 +178,69 @@ routes:
       "200": products sucessfully retrieved
       "404": category doesn't exist
       "500": generic server error
+
+  # /cart:
+  #   post:
+  #     description: Creates a new cart (if there isn't one) and associates it with a user_id
+  #     parameter1:
+  #       name: username
+  #       in: body
+  #       required: true
+  #     parameter2:
+  #       name: token
+  #       in: query
+  #       required: true
+  #     schema:
+  #       type: object
+  #       required:
+  #         - username
+  #       properties:
+  #         username:
+  #           type: string
+
+  /cart/:cartId:
+    get:
+      description: Gets the cart of a particular user
+      parameter1:
+        name: cartId
+        in: path
+      parameter2:
+        name: token
+        in: query
+      reponses:
+        "200": Returns cart items
+        "204": Cart is empty
+        "403": Not authorized
+
+        "500": Server error
+    post:
+      description: Puts an item in the user's cart
+      parameter1:
+        name: cartId
+        in: path
+        require: true
+      parameter2:
+        name: product_id
+        in: body
+        required: true
+      parameter3:
+        name: quantity
+        in: body
+        required: true
+      parameter4:
+        name: token
+        in: query
+        required: true
+      schema:
+        type: object
+        required:
+          - product_id
+          - quantity
+        properties:
+          product_id:
+            type: integer
+          quantity:
+            type: integer
+      responses:
+        "200": Item added to cart
+        "500": Server error
