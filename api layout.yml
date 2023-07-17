@@ -202,7 +202,7 @@ routes:
     get:
       description: Gets the cart of a particular user
       parameter1:
-        name: cartId
+        name: username
         in: path
       parameter2:
         name: token
@@ -211,7 +211,6 @@ routes:
         "200": Returns cart items
         "204": Cart is empty
         "403": Not authorized
-
         "500": Server error
     post:
       description: Puts an item in the user's cart
@@ -244,3 +243,36 @@ routes:
       responses:
         "200": Item added to cart
         "500": Server error
+
+  /cart/:cartId/checkout:
+    post:
+      description: checks out a user, creates an order
+    parameter1:
+      name: token
+        in: query
+        required: true
+    parameter2:
+      name: cartId
+      in: path
+      required: true
+    parameter3:
+      name: address
+      in: body
+      required: true
+      schema:
+        - shiptoStreet
+        - shiptoCity
+        - shiptoState
+        - shiptoZipcode
+    parameter4:
+      name: paymentInfo
+      in: body
+      required: true
+      schema:
+        - cardNumber
+        - expirationDate
+        - CVV
+    responses:
+      "200": Creates an order
+      "403": Not authorized
+      "500": Server error

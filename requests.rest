@@ -64,3 +64,9 @@ Content-Type: application/json
 GET http://localhost:8000/products/category/dolorum
 Content-Type: application/json
 
+### Cart requests
+
+### Get cart items
+GET http://localhost:8000/cart/jsan
+?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImpzYW4iLCJpYXQiOjE2ODk1NTk4MDgsImV4cCI6MTY4OTU2MzQwOH0.hBciiYylcYEcs8EQyU_7zT200UuUY8ZbbD2B1llhkb0
+Content-Type: application/json
