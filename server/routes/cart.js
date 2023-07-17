@@ -45,13 +45,22 @@ cartRouter.get("/:username", async (req, res) => {
 cartRouter.post("/:username", async (req, res) => {
 	const { productId, quantity } = req.body;
 	try {
-		const addedToCart = await pool.query(
-			"INSERT INTO cart (cart_id, product_id, quantity) VALUES ($1, $2, $3)",
-			[req.cartId, productId, quantity]
+		const itemPriceString = await pool.query(
+			"SELECT sell_price FROM product WHERE product_id = $1",
+			[productId]
 		);
-		if (!addedToCart) {
-			res.status(500).send("Server error. Please try again.");
-		}
+		const itemPrice = parseFloat(
+			itemPriceString.rows[0].sell_price.replace(/[^0-9.-]+/g, "")
+		);
+		const total = Number(quantity) * Number(itemPrice);
+
+		// const addedToCart = await pool.query(
+		// 	"INSERT INTO cart (cart_id, product_id, quantity) VALUES ($1, $2, $3)",
+		// 	[req.cartId, productId, quantity]
+		// );
+		// if (!addedToCart) {
+		// 	res.status(500).send("Server error. Please try again.");
+		// }
 		res.status(200).send("Item added successfully.");
 	} catch (err) {
 		console.log(err);
@@ -59,9 +68,8 @@ cartRouter.post("/:username", async (req, res) => {
 });
 
 // Checkout endpoint that creates an order
-cartRouter.post("/:cartId/checkout", async (req, res) => {
+cartRouter.post("/:username/checkout", async (req, res) => {
 	const {
-		cartId,
 		shiptoStreet,
 		shiptoCity,
 		shiptoState,
@@ -75,9 +83,9 @@ cartRouter.post("/:cartId/checkout", async (req, res) => {
 		// First, check that cart exists
 		const cartExists = await pool.query(
 			"SELECT * FROM cart where cart_id = $1",
-			[cartId]
+			[req.cartId]
 		);
-		if (!cartExists) {
+		if (!cartExists.rows) {
 			res.status(204).send("Cart is empty.");
 		}
 		//Then, charge the card

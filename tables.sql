@@ -48,6 +48,7 @@ CREATE TABLE cart (
     cart_id varchar(255) REFERENCES users(user_id),
 	product_id integer REFERENCES product(product_id),
 	quantity integer NOT NULL,
+    total integer NOT NULL,
     PRIMARY KEY (cart_id, product_id)
 );
 
