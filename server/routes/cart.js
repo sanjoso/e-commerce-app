@@ -18,7 +18,6 @@ cartRouter.param("username", async (req, res, next) => {
 			[username]
 		);
 		req.cartId = cartId.rows[0].user_id;
-		//console.log(cartId.rows[0].user_id);
 		next();
 	} catch (err) {
 		console.log(err);
@@ -27,13 +26,10 @@ cartRouter.param("username", async (req, res, next) => {
 
 // Gets the items in a user's cart
 cartRouter.get("/:username", async (req, res) => {
-	const { cartId } = req.params;
-	console.log("here");
-	console.log(req.cartId);
 	try {
 		const cartItems = await pool.query(
 			"SELECT * FROM cart WHERE cart_id = $1",
-			[cartId]
+			[req.cartId]
 		);
 
 		if (!cartItems.rows) {
@@ -46,13 +42,12 @@ cartRouter.get("/:username", async (req, res) => {
 });
 
 // Adds an item to the cart
-cartRouter.post("/:cartId", async (req, res) => {
-	const { cartId } = req.params;
+cartRouter.post("/:username", async (req, res) => {
 	const { productId, quantity } = req.body;
 	try {
 		const addedToCart = await pool.query(
 			"INSERT INTO cart (cart_id, product_id, quantity) VALUES ($1, $2, $3)",
-			[cartId, productId, quantity]
+			[req.cartId, productId, quantity]
 		);
 		if (!addedToCart) {
 			res.status(500).send("Server error. Please try again.");
