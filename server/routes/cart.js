@@ -119,12 +119,12 @@ cartRouter.post("/:username/checkout", async (req, res) => {
 				req.cartId,
 			]
 		);
-		console.log(orderCreated);
-		if (!orderCreated.rows[0].order_id) {
+		if (!orderCreated.rows) {
 			res.status(400).send("Something went wrong.");
 		}
 		res.status(200).send("Order created successfully");
 	} catch (err) {
+		res.status(400).send("Something went wrong.");
 		console.log(err);
 	}
 });

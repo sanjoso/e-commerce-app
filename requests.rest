@@ -83,7 +83,7 @@ Content-Type: application/json
 
 ### Checks out a user, creates an order in the orders table
 POST http://localhost:8000/cart/jsan/checkout
-?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImpzYW4iLCJpYXQiOjE2ODk2NDczODIsImV4cCI6MTY4OTY1MDk4Mn0.ufPTRiMKT8i1MTHR37B-gsHpEp-fofHP6tuEK5EMr2Q
+?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImpzYW4iLCJpYXQiOjE2ODk2NDg1NTAsImV4cCI6MTY4OTY1MjE1MH0.lXZ-sl-2BKGIRz5TN11T7ZNkWiLdss_CfuciRu_EUPM
 Content-Type: application/json
 
 {
