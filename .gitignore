@@ -1,5 +1,4 @@
 #dependences
 /server/node_modules
 
-#requests file
-./requests.rest
+*.rest
