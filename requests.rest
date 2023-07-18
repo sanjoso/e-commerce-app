@@ -68,15 +68,30 @@ Content-Type: application/json
 
 ### Get cart items
 GET http://localhost:8000/cart/jsan
-?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImpzYW4iLCJpYXQiOjE2ODk1OTA2NjgsImV4cCI6MTY4OTU5NDI2OH0.I_-ydlGy3EKgQ7icRgc_Cs2Z0swGuWP5VzGXhVJZRUM
+?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImpzYW4iLCJpYXQiOjE2ODk2NDQxNjUsImV4cCI6MTY4OTY0Nzc2NX0.cfZnGrT78uIlb-5diEQEfy5ACTAL93owAIDbXFVQesE
 Content-Type: application/json
 
 ### Put an item in the cart
 POST http://localhost:8000/cart/jsan
-?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImpzYW4iLCJpYXQiOjE2ODk1OTA2NjgsImV4cCI6MTY4OTU5NDI2OH0.I_-ydlGy3EKgQ7icRgc_Cs2Z0swGuWP5VzGXhVJZRUM
+?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImpzYW4iLCJpYXQiOjE2ODk2NDM2NjYsImV4cCI6MTY4OTY0NzI2Nn0.O9GQwrG53nvVNtLQPdKdgv6cpUDUVdNzeQMm6lqY7oc
 Content-Type: application/json
 
 {
-    "productId": "5",
-    "quantity": "25"
+    "productId": "9",
+    "quantity": "27"
+}
+
+### Checks out a user, creates an order in the orders table
+POST http://localhost:8000/cart/jsan/checkout
+?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImpzYW4iLCJpYXQiOjE2ODk2NDczODIsImV4cCI6MTY4OTY1MDk4Mn0.ufPTRiMKT8i1MTHR37B-gsHpEp-fofHP6tuEK5EMr2Q
+Content-Type: application/json
+
+{
+    "shiptoStreet": "6931 Willow Wood Drive",
+    "shiptoCity": "Lockport",
+    "shiptoState": "NY",
+    "shiptoZipcode": "14094",
+    "cardNumber": "1234123412346630",
+    "expirationDate": "0624",
+    "CVV": "123"
 }

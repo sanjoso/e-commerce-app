@@ -20,7 +20,6 @@ CREATE TABLE orders (
 	shipto_city varchar(30) NOT NULL,
 	shipto_state char(2) NOT NULL,
 	shipto_zipcode varchar(10) NOT NULL,
-	email varchar(100) NOT NULL,
 	pay_method varchar(20) NOT NULL,
 	card_num char(4) NOT NULL,
 	user_id varchar(255) REFERENCES users(user_id)
@@ -48,7 +47,7 @@ CREATE TABLE cart (
     cart_id varchar(255) REFERENCES users(user_id),
 	product_id integer REFERENCES product(product_id),
 	quantity integer NOT NULL,
-    total integer NOT NULL,
+    total money NOT NULL,
     PRIMARY KEY (cart_id, product_id)
 );
 

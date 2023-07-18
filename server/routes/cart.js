@@ -54,13 +54,13 @@ cartRouter.post("/:username", async (req, res) => {
 		);
 		const total = Number(quantity) * Number(itemPrice);
 
-		// const addedToCart = await pool.query(
-		// 	"INSERT INTO cart (cart_id, product_id, quantity) VALUES ($1, $2, $3)",
-		// 	[req.cartId, productId, quantity]
-		// );
-		// if (!addedToCart) {
-		// 	res.status(500).send("Server error. Please try again.");
-		// }
+		const addedToCart = await pool.query(
+			"INSERT INTO cart (cart_id, product_id, quantity, total) VALUES ($1, $2, $3, $4)",
+			[req.cartId, productId, quantity, total]
+		);
+		if (!addedToCart) {
+			res.status(500).send("Server error. Please try again.");
+		}
 		res.status(200).send("Item added successfully.");
 	} catch (err) {
 		console.log(err);
@@ -89,17 +89,41 @@ cartRouter.post("/:username/checkout", async (req, res) => {
 			res.status(204).send("Cart is empty.");
 		}
 		//Then, charge the card
-		const total = "SELECT SUM(price) AS total FROM cart WHERE cart_id = x"; //FIND THE TOTAL FROM ADDING THE PRICES IN THE DB
+		const payMethod = "CitizensBankChecking";
+		const cardNumLastFour = Number(cardNumber.substring(cardNumber.length - 4));
+		const rawTotal = await pool.query(
+			"SELECT SUM(total) AS total FROM cart WHERE cart_id = $1",
+			[req.cartId]
+		);
+		const total = parseFloat(rawTotal.rows[0].total.replace(/[^0-9.-]+/g, ""));
+
 		const chargeCard = true;
 		if (!chargeCard) {
 			res.status(400).send("Payment not successful.");
 		}
 		//Then, create an order in the database
 		const orderId = uuidv4();
+		const date = new Date();
 		const orderCreated = await pool.query(
-			"INSERT INTO orders (order_id, date, total, shipto_street, shipto_city, shipto_state, shipto_zipcode, email, pay_method, card_num, user_id VALUES $1,$2, $3, $4, $5, $6, $7, $8, $9, $10, $11",
-			[orderId, Date.now()]
+			"INSERT INTO orders (order_id, date, total, shipto_street, shipto_city, shipto_state, shipto_zipcode, pay_method, card_num, user_id) VALUES ($1,$2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING order_id",
+			[
+				orderId,
+				date,
+				total,
+				shiptoStreet,
+				shiptoCity,
+				shiptoState,
+				shiptoZipcode,
+				payMethod,
+				cardNumLastFour,
+				req.cartId,
+			]
 		);
+		console.log(orderCreated);
+		if (!orderCreated.rows[0].order_id) {
+			res.status(400).send("Something went wrong.");
+		}
+		res.status(200).send("Order created successfully");
 	} catch (err) {
 		console.log(err);
 	}
